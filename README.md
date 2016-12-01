@@ -3,4 +3,4 @@ Polymer model
 
 Created from Polymer codebase
 
-![UML diagram](uml.png?raw=true)
+![UML diagram](class-diagram.png?raw=true)

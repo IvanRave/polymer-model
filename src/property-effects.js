@@ -138,6 +138,7 @@ function runComputedEffect(inst, property, value, old, info) {
  * @param {Object} inst Prototype or instance
  * @param {Object} sig Method signature metadata
  * @param {Function} effectFn Function to run when arguments change
+ * @param {string=} methodInfo Name of a property (for computed props)
  * @param {boolean=} dynamic Whether the method name should be included as
  *   a dependency to the effect.
  * @private
@@ -834,41 +835,6 @@ class PropertyEffects extends PropertyAccessors {
   }
 
   /**
-   * Called by 2-way binding notification event listeners to set a property
-   * or path to the host based on a notification from a bound child.
-   *
-   * This method is provided as an override point.  The default
-   * implementation causes a synchronous `set` of the given path.
-   *
-   * @param {string} path Path on this instance to set
-   * @param {*} value Value to set to given path
-   * @protected
-   */
-  _setPropertyFromNotification(path, value) {
-    this.set(path, value);
-  }
-
-  /**
-   * Called by "annotation effect" to set a property to a node.  Note,
-   * the caller must ensure that the target node has a property effect for
-   * the property in question, otherwise this method will error.
-   *
-   * This method is provided as an override point.  The default
-   * implementation calls `_setProperty` to synchronously set & flush
-   * the property to the node as long as the property is not read-only.
-   *
-   * @param {Node} node Node to set property on
-   * @param {string} prop Property (or path) name to set
-   * @param {*} value Value to set
-   * @protected
-   */
-  _setPropertyToNodeFromAnnotation(node, prop, value) {
-    if (!node._hasReadOnlyEffect(prop)) {
-      node._setProperty(prop, value);
-    }
-  }
-
-  /**
    * Called by "computed property effect" to set the result of a computing
    * function to the computing property.
    *
@@ -881,6 +847,7 @@ class PropertyEffects extends PropertyAccessors {
    * @protected
    */
   _setPropertyFromComputation(prop, value) {
+    console.log('setPropFromComputation', prop);
     this[prop] = value;
   }
 

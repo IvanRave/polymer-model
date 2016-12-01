@@ -94,7 +94,10 @@ class PropertyAccessors {
       get: function() {
         return this.__data && this.__data[property];
       },
-      set: readOnly ? function() { } : function(value) {
+      set: readOnly ? function() { 
+        console.log('_setProp readonly', property);
+      } : function(value) {
+        console.log('_setProp', property);
         this._setProperty(property, value);
       }
     });
@@ -110,7 +113,6 @@ class PropertyAccessors {
    */
   _setProperty(property, value) {
     if (this._setPendingProperty(property, value)) {
-      //console.log('===setProp', property);
       this._invalidateProperties();
     }
   }
@@ -126,6 +128,7 @@ class PropertyAccessors {
    * @protected
    */
   _setPendingProperty(property, value) {
+    console.log('_setPendingProperty', property);
     let old = this.__data[property];
     if (this._shouldPropChange(property, value, old)) {
       if (!this.__dataPending) {

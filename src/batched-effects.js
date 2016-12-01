@@ -52,7 +52,6 @@ function computeLinkedPaths(inst, changedProps, computedProps) {
 }
 
 function notifyProperties(inst, changedProps, computedProps, oldProps) {
-  console.log('notifyProps');
   // Determine which props to notify
   //  let props = inst.__dataFromAbove ? computedProps : changedProps;
   // Save interim data for potential re-entry
@@ -145,32 +144,6 @@ class BatchedEffects extends PropertyEffects {
     // ----------------------------
     // console.groupEnd(this.localName + '#' + this.id + ': ' + c);
     // ----------------------------
-  }
-
-  _setPropertyToNodeFromAnnotation(node, prop, value) {
-    // TODO(kschaaf): fix id of BatchedEffects client...
-    if (node.setProperties) {
-      if (!node._hasReadOnlyEffect(prop)) {
-        if (node._setPendingProperty(prop, value)) {
-          this._enqueueClient(node);
-        }
-      }
-    } else {
-      super._setPropertyToNodeFromAnnotation(node, prop, value);
-    }
-  }
-
-  _setPropertyFromNotification(path, value, event) {
-    let detail = event.detail;
-    if (detail && detail.queueProperty) {
-      if (!this._hasReadOnlyEffect(path)) {
-        if ((path = this._setPathOrUnmanagedProperty(path, value))) {
-          this._setPendingProperty(path, value);
-        }
-      }
-    } else {
-      super._setPropertyFromNotification(path, value, event);
-    }
   }
 
   _setPropertyFromComputation(prop, value) {
