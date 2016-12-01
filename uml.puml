@@ -1,0 +1,50 @@
+@startuml
+
+enum TYPES {
+  ANY
+  COMPUTE
+  OBSERVE
+  READ_ONLY
+}
+
+class PropertyAccessors {
+  +PropertyAccessors()
+}
+
+class PropertyEffects {
+  PROPERTY_EFFECT_TYPES: TYPES
+  +PropertyEffects()
+  +linkPaths(to, from)
+  +unlinkPaths(path)
+  +notifyPath(path, value)
+  +notifySplices(path, splices)
+  +get(path, root)
+  +set(path, value, root)
+  +ready()
+}
+
+class BatchedEffects {
+  +BatchedEffects()
+  +setProperties(props)
+}
+
+class Property {
+  type: JsType
+  observer: String
+  computed: String
+}
+
+class Store {
+  properties: Property[]
+  observers: Map<Function>
+  Store(config)
+  +ready()
+}
+
+Store           o--> Property
+PropertyEffects *--> TYPES
+Store           --|> BatchedEffects
+BatchedEffects  --|> PropertyEffects
+PropertyEffects --|> PropertyAccessors
+
+@enduml

@@ -1,0 +1,20 @@
+{
+  "name": "polymer-model",
+  "version": "0.1.0",
+  "description": "Computed, observable props for models",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "Polymer",
+    "computed",
+    "observables"
+  ],
+  "author": "",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  }
+}
